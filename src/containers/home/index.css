@@ -1,3 +1,13 @@
 .button-add {
   margin-top: -34px;
+  position: relative;
+}
+div {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+span {
+  max-width: 1000px;
+  word-wrap: break-word;
+  display: flex;
 }
