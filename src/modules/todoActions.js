@@ -36,6 +36,7 @@ export default (state = initialState, action) => {
       }
 
     case 'REMOVE':
+      service.removeTodo(action.payload);
       return {
         ...state,
         todos: state.todos.filter((todo) => {
@@ -44,6 +45,7 @@ export default (state = initialState, action) => {
       }
 
     case 'COMPLETE':
+      service.completeTodo(action.payload);
       return {
         ...state,
         todos: state.todos.map((todo) => {
@@ -71,6 +73,7 @@ export default (state = initialState, action) => {
         newState = {
           ...state,
           todos: state.todos.map((todo) => {
+            if (todo.isEditing) service.editTodo(todo);
             if (todo.id === action.payload.id) {
               todo.isEditing = !todo.isEditing;
             }
@@ -98,9 +101,16 @@ export default (state = initialState, action) => {
       }
 
     case 'DELETE_COMPLETED':
+      service.deleteCompleted();
       return {
         ...state,
         todos: state.todos.filter((todo) => {return !todo.completed})
+      }
+
+    case 'GET_TODOS':
+      return {
+        ...state,
+        todos: action.payload
       }
 
     default:
@@ -176,4 +186,15 @@ export const handleChange = (event) => {
       payload: event.target.value
     });
   };
+}
+
+export const getTodos = () => {
+  return dispatch => {
+    service.getTodos().then((todos) => {
+      dispatch({
+        type: 'GET_TODOS',
+        payload: todos
+      })
+    })
+  }
 }
