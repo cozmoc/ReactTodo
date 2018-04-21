@@ -8,20 +8,23 @@ const initialState = {
   input: {
     value: '',
     id: randomId(),
-    completed: false
+    completed: false,
+    date: new Date().toJSON().slice(0,10).replace(/-/g,' ')
   }
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case 'ADD':
+      if (!state.input.value.trim()) return state;
       return {
         ...state,
         todos: [].concat(state.todos, state.input),
         input: {
           value: '',
           id: randomId(),
-          completed: false
+          completed: false,
+          date: new Date().toJSON().slice(0,10).replace(/-/g,' ')
         }
       }
 
@@ -29,7 +32,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         todos: state.todos.filter((todo) => {
-          return todo.id !== action.payload.id;
+          return todo.id !== action.payload;
         })
       }
 
@@ -37,8 +40,8 @@ export default (state = initialState, action) => {
       return {
         ...state,
         todos: state.todos.map((todo) => {
-          if (todo.id === action.payload.id) {
-            todo.completed = true;
+          if (todo.id === action.payload) {
+            todo.completed = !todo.completed;
           }
           return todo;
         })
@@ -49,7 +52,9 @@ export default (state = initialState, action) => {
         ...state,
         input: {
           value: action.payload,
-          id: randomId()
+          id: randomId(),
+          completed: false,
+          date: new Date().toJSON().slice(0,10).replace(/-/g,' ')
         }
       }
 

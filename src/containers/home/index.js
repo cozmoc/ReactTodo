@@ -15,32 +15,34 @@ const Home = props => (
     <div className="container">
       <div className="row">
         <div className="col-md-12">
-          <form onSubmit={props.add} className="form-inline" role="form">
-            <div className="form-group">
-              <input onChange={props.handleChange} value={props.input.value} type="text" className="form-control" placeholder="Add todo"/>
-            </div>
-            <input type="submit" className="btn btn-success" id="add-todo-button" value="Add"/>
-          </form>
-          <br />
           <div className="well">
-          <h2>TODOS</h2>
-          <ul>
-            {
-              props.todos.map((todo) => {
-                return (
-                  <li key={todo.id}>
-                    <div className="text-right hidden-phone">
-                      <span className="pull-left">{todo.value}</span>
-                      <button onClick={() => { props.complete(todo.id) }} className="btn btn-success btn-xs"><i className=" fa fa-check"></i></button>
-                      <i> </i>
-                      <button className="btn btn-danger btn-xs"><i className="fa fa-trash-o "></i></button>
-                    </div>
-                    <br />
-                  </li>
-                );
-              })
-            }
-          </ul>
+            <h3>Todo List</h3>
+            <form onSubmit={props.add} className="" role="form">
+              <div className="form-group">
+                <input onChange={props.handleChange} value={props.input.value} type="text" className="form-control" placeholder="Add todo"/>
+                <input type="submit" className="pull-right btn btn-success button-add" value="Add"/>
+              </div>
+            </form>
+            <br />
+            <ul>
+              {
+                props.todos.map((todo) => {
+                  return (
+                    <li key={todo.id}>
+                      <div className="text-right hidden-phone">
+                        <strong>{todo.completed ? <strike className="pull-left">{todo.value}</strike> : <span className="pull-left">{todo.value}</span>}</strong>
+                        <span className="label label-xs label-primary">{todo.date}</span>
+                        <i> </i>
+                        <button onClick={() => { props.complete(todo.id) }} className="btn btn-success btn-xs"><i className=" fa fa-check"></i></button>
+                        <i> </i>
+                        <button onClick={() => { props.remove(todo.id) }} className="btn btn-danger btn-xs"><i className="fa fa-trash-o"></i></button>
+                      </div>
+                      <br />
+                    </li>
+                  );
+                })
+              }
+            </ul>
           </div>
         </div>
       </div>

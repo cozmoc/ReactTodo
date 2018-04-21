@@ -3,10 +3,11 @@ import { Route, Link } from 'react-router-dom';
 import Home from '../home';
 import About from '../about';
 import store, { history } from '../../store';
+import './App.css';
 
 const App = () => (
   <div>
-    <div className="navbar navbar-default" role="navigation">
+    <div className="navbar navbar-custom" role="navigation">
       <div className="container-fluid">
         <div className="navbar-header">
           <a className="navbar-brand">TODO App</a>
