@@ -1,4 +1,4 @@
-const url = 'http://48d7d574.ngrok.io';
+const url = '';
 
 export default {
   getTodos: (input) => {
@@ -7,7 +7,8 @@ export default {
       headers: {
         'content-type': 'application/json'
       },
-    }).then((res) => res.json());
+    }).then((res) => res.json())
+      .catch((res) => { return []; });
   },
   addTodo: (input) => {
     return fetch(`${url}/add`, {
