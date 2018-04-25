@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './index';
+import about from './index';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
 import store, { history } from '../../store';
@@ -14,27 +14,11 @@ global.render = render;
 global.mount = mount;
 
 const component1 = shallow((
-  <App />
+  <about store={store} />
 ));
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(
-    <Provider store={store}>
-      <ConnectedRouter history={history}>
-        <div>
-          <App />
-        </div>
-      </ConnectedRouter>
-    </Provider>, div);
+  ReactDOM.render(<about store={store} />, div);
   ReactDOM.unmountComponentAtNode(div);
 });
-
-it('routes to Home Component on click on Home', () => {
-  expect(component1.children().at(1).get(0).props.children[0].props.path).toEqual('/');
-});
-
-it('routes to About Component on click on About', () => {
-  expect(component1.children().at(1).get(0).props.children[1].props.path).toEqual('/about');
-});
-
